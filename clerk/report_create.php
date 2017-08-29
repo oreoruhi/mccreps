@@ -71,7 +71,7 @@
                         <div class="body">
                             <?php if($_GET['type'] == 'OBTL'){ ?>
                                 <?php require 'report/obtl.php'; ?>
-                            <?php } else if() {?>
+                            <?php } else if($_GET['type'] == 'Counseling Report') {?>
                                 <?php require 'report/counsel.php'; ?>
                             <?php } ?>
                         </div>
