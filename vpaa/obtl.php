@@ -124,15 +124,27 @@
                 }
             }
 
-            if(data['vpaa_remarks'] == 'Approved'){
-                $('.decision-row').empty();
+            if(data['vpaa_remarks'] == 'Approved' || data['vpaa_remarks'] == 'For Revision'){
+                $('.decision-row').attr('hidden', true);
+            } else {
+                $('.comments').attr('hidden', true);
             }
+
+            if(data['vpaa_remarks'] == 'Approved' && data['dean_remarks'] == 'Approved'){
+                $('.print').removeAttr('hidden');
+            }
+
+            $('.clickPrint').on('click', function(){
+                var dataPass = data['id'];
+                window.location = "../components/printing_page.php?data=" + dataPass;
+            });
 
         });
 
         $('#review-modal').on('hide.bs.modal', function(e) {
             $('.list-data-even').empty();
             $('.list-data-odd').empty();
+            $('.decision-buttons').removeAttr('hidden');
         });
 
     </script>

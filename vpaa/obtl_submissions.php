@@ -143,7 +143,7 @@
 
             $('.clickPrint').on('click', function(){
                 var dataPass = data['id'];
-                window.location = "../components/printing_page.php?data=" + dataPass;
+                window.location = "../components/printing_page.php?data=" + dataPass + "&type=obtl";
             });
 
         });

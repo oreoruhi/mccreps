@@ -19,12 +19,28 @@
 	  height: 29.7cm; 
 	}
 	@media print {
- 	  body, page {
-      margin: 0;
-      box-shadow: 0;
+ 	  	body, page {
+      		margin: 0;
+      		box-shadow: 0;
+  		}
+  		div.buttons {
+			display: none;
+  		}
   	}
 </style>
 <page size="A4" layout="portrait">
+	<div class="buttons" style="margin-top: 10px;">
+		<table border="0" style="width: 100%;padding-left: 120px;padding-right:120px;padding-top:10px;" cellpadding="5">
+			<tr>
+				<td style="width:50%;">
+					<center><button type="button" onclick="pagePrint()">Print this page</button></center>
+				</td>
+				<td style="width:50%;">
+					<center><button type="button" onclick="dashboardReturn()">Go back to Dashboard</button></center>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<div style="padding-left: 96px;padding-right:96px;padding-top:20px;">
 		<center>
 			<table>
@@ -58,7 +74,7 @@
 	<div style="padding-left: 96px;padding-right:96px;padding-bottom:96px;padding-top:20px;">
 		<!-- Make the link dynamic -->
 		<?php
-			$page = 'obtl';  //change name to name of the page to print
+			$page = $_GET['type'];  //change name to name of the page to print
 			require 'print/' . $page . '.php'; 
 		?> 
 	</div>
@@ -68,8 +84,15 @@
 <script src="../plugins/jquery/jquery.min.js"></script>
 
 <script>
-	$(document).ready(function() {
-    	window.print();
-    	document.location.href= "../<?php echo $_SESSION['folder']; ?>/index.php?print=true";
-	});
+	// $(document).ready(function() {
+ 	//		window.print();
+ 	//    	document.location.href= "../<?php echo $_SESSION['folder']; ?>/index.php?print=true";
+	// });
+
+	function pagePrint(){
+		window.print();
+	}
+	function dashboardReturn(){
+		document.location.href= "../<?php echo $_SESSION['folder']; ?>/index.php";
+	}
 </script>
