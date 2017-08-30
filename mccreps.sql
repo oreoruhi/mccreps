@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2017 at 12:25 AM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- Generation Time: Aug 30, 2017 at 09:30 AM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,6 +21,42 @@ SET time_zone = "+00:00";
 --
 -- Database: `mccreps`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `counsel_details`
+--
+
+CREATE TABLE `counsel_details` (
+  `id` int(10) NOT NULL,
+  `counsel_id` int(10) NOT NULL,
+  `faculty_id` int(10) NOT NULL,
+  `submission_date` date NOT NULL,
+  `report_file` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `counsel_list`
+--
+
+CREATE TABLE `counsel_list` (
+  `id` int(10) NOT NULL,
+  `sched_id` int(10) NOT NULL,
+  `counsel_title` text NOT NULL,
+  `counsel_institute` int(10) NOT NULL,
+  `counsel_author` int(10) NOT NULL,
+  `counsel_approver` int(10) DEFAULT NULL,
+  `dean_fa_submitted` date NOT NULL,
+  `dean_remarks` enum('Approved','Pending','Revision') NOT NULL,
+  `dean_comments` text,
+  `vpaa_fa_submitted` date DEFAULT NULL,
+  `vpaa_remarks` enum('Approved','Pending','Revision') DEFAULT NULL,
+  `vpaa_comments` text,
+  `system_remarks` enum('OK','LATE') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -171,10 +209,10 @@ CREATE TABLE `obtl_details` (
 --
 
 INSERT INTO `obtl_details` (`id`, `obtl_id`, `faculty_id`, `course_desc`, `course_code`) VALUES
-(81, 20, 28, 'Software Engineering', 'SE'),
-(82, 20, 33, 'Software Engineering', 'SE'),
-(83, 20, 29, 'Project Management', 'PM'),
-(84, 20, 30, 'Project Management', 'PM');
+(1, 1, 29, 'Software Engineering', 'SE'),
+(2, 1, 28, 'Software Engineering', 'SE'),
+(3, 1, 39, 'System Analysis and Design', 'SAD'),
+(4, 1, 41, 'System Analysis and Design', 'SAD');
 
 -- --------------------------------------------------------
 
@@ -203,7 +241,7 @@ CREATE TABLE `obtl_list` (
 --
 
 INSERT INTO `obtl_list` (`id`, `sched_id`, `obtl_title`, `obtl_institute`, `obtl_author`, `obtl_approver`, `dean_fa_submitted`, `dean_remarks`, `dean_comments`, `vpaa_fa_submitted`, `vpaa_remarks`, `vpaa_comments`, `system_remarks`) VALUES
-(20, 3, 'ICS OBTL Report', 3, 14, 13, '2017-08-15', 'Approved', '', '2017-08-15', 'Approved', '', 'OK');
+(1, 6, 'ICS OBTL Report', 3, 16, 15, '2017-08-30', 'Approved', '', '2017-08-30', 'Approved', '', 'OK');
 
 -- --------------------------------------------------------
 
@@ -226,8 +264,8 @@ CREATE TABLE `report_schedule` (
 --
 
 INSERT INTO `report_schedule` (`id`, `report_type`, `semester`, `academic_year`, `deadline`, `deadline_extension`, `status`) VALUES
-(3, 'OBTL', '1', 'A.Y.: 2017 - 2018', '2017-08-21', '2017-08-26', 'Ongoing'),
-(4, 'Counseling Report', '1', 'A.Y.: 2017 - 2018', '2017-08-28', '2017-09-02', 'Ongoing');
+(5, 'Counseling Report', '1', 'A.Y.: 2017 - 2018', '2017-08-31', '2017-09-05', 'Ongoing'),
+(6, 'OBTL', '1', 'A.Y.: 2017 - 2018', '2017-08-31', '2017-09-05', 'Ongoing');
 
 -- --------------------------------------------------------
 
@@ -248,8 +286,8 @@ CREATE TABLE `security` (
 
 INSERT INTO `security` (`id`, `secq_id`, `secq_ans`, `user_id`) VALUES
 (1, 'SECQ1100', 'd8a0e1ea9110878bf10d0613fd090c1d', 1),
-(10, 'SECQ1500', '1c0045a04dc0a001644a207dfdc44dea', 13),
-(11, 'SECQ1500', '3117ba116abc81b432a9f96d40a865c0', 14);
+(12, 'SECQ1600', '928588b4e5661cd4bce65af9dda931a6', 15),
+(13, 'SECQ1500', '3117ba116abc81b432a9f96d40a865c0', 16);
 
 -- --------------------------------------------------------
 
@@ -300,12 +338,30 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `sys_id`, `firstname`, `middlename`, `lastname`, `ins_id`, `username`, `password`, `display_picture`, `status`) VALUES
 (1, 1, 'Rugie Ann', 'Narciso', 'Barrameda', 3, 'admin', '4297f44b13955235245b2497399d7a93', '18740660_1280125192086339_5363657698390268240_n.jpg', 'Active'),
 (2, 2, 'Rowena', '', 'Macapagal', 5, 'rowenavpaa', '4297f44b13955235245b2497399d7a93', '13434703_292134357788398_1425024239948300588_n.jpg', 'Active'),
-(13, 4, 'George', '', 'Granados', 3, 'george80', '4297f44b13955235245b2497399d7a93', 'user.png', 'Active'),
-(14, 3, 'April Jane', '', 'Aguilar', 3, 'apriljane89', '4297f44b13955235245b2497399d7a93', 'user.png', 'Active');
+(15, 4, 'George', '', 'Granados', 3, 'george22', '4297f44b13955235245b2497399d7a93', 'user.png', 'Active'),
+(16, 3, 'April Jane', '', 'Aguilar', 3, 'apriljane81', '4297f44b13955235245b2497399d7a93', 'user.png', 'Active');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `counsel_details`
+--
+ALTER TABLE `counsel_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `counsel_id` (`counsel_id`),
+  ADD KEY `faculty_id` (`faculty_id`);
+
+--
+-- Indexes for table `counsel_list`
+--
+ALTER TABLE `counsel_list`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sched_id` (`sched_id`),
+  ADD KEY `counsel_institute` (`counsel_institute`),
+  ADD KEY `counsel_author` (`counsel_author`),
+  ADD KEY `counsel_approver` (`counsel_approver`);
 
 --
 -- Indexes for table `faculty`
@@ -378,6 +434,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `counsel_details`
+--
+ALTER TABLE `counsel_details`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `counsel_list`
+--
+ALTER TABLE `counsel_list`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
@@ -396,22 +462,22 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `obtl_details`
 --
 ALTER TABLE `obtl_details`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `obtl_list`
 --
 ALTER TABLE `obtl_list`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `report_schedule`
 --
 ALTER TABLE `report_schedule`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `security`
 --
 ALTER TABLE `security`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `sys_position`
 --
@@ -421,10 +487,26 @@ ALTER TABLE `sys_position`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `counsel_details`
+--
+ALTER TABLE `counsel_details`
+  ADD CONSTRAINT `counsel_details_ibfk_1` FOREIGN KEY (`counsel_id`) REFERENCES `counsel_list` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `counsel_details_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `counsel_list`
+--
+ALTER TABLE `counsel_list`
+  ADD CONSTRAINT `counsel_list_ibfk_1` FOREIGN KEY (`sched_id`) REFERENCES `report_schedule` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `counsel_list_ibfk_2` FOREIGN KEY (`counsel_institute`) REFERENCES `institutes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `counsel_list_ibfk_3` FOREIGN KEY (`counsel_author`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `counsel_list_ibfk_4` FOREIGN KEY (`counsel_approver`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `faculty`
@@ -467,6 +549,7 @@ ALTER TABLE `security`
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`sys_id`) REFERENCES `sys_position` (`id`),
   ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`ins_id`) REFERENCES `institutes` (`id`) ON DELETE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
