@@ -51,7 +51,7 @@
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                     <tr>
-                                        <th>OBTL Title</th>
+                                        <th>Counsel Report Title</th>
                                         <th>Institute</th>
                                         <th>OBTL Author</th>
                                         <th>Date Submitted</th>
