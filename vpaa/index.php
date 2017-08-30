@@ -166,7 +166,7 @@
                                                     <td><center><?php echo date_format(date_create($schedule['deadline_extension']), 'M d, Y - D'); ?></center></td>
                                                     <td><center><?php echo $schedule['status']; ?></center></td>
                                                     <td><center><button type="button" class="btn bg-cyan waves-effect" data-toggle="modal" data-target="#edit-schedule-modal" data-reporttype="OBTL" data-id="<?php echo $schedule['id']; ?>">MODIFY DEADLINE</button>&nbsp;<a href="../functions/activity.php?activityOpt=true&deleteSchedule=true&id=<?php echo $schedule['id']; ?>&folder=<?php echo $_SESSION['folder']; ?>"><button type="button" class="btn bg-red waves-effect">CANCEL</button></a></center><br>
-                                                    <center><a href="counsel_submissions.php?id=<?php echo $schedule['id']; ?><button type="button" class="btn bg-green waves-effect">SUBMITTED REPORTS</button></a></center></td>
+                                                    <center><a href="counsel_submissions.php?id=<?php echo $schedule['id']; ?>"><button class="btn bg-green waves-effect">SUBMITTED REPORTS</button></a></center></td>
                                                 </tr>
                                             <?php } ?>
                                         <?php endforeach; ?>
