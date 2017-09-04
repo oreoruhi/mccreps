@@ -24,10 +24,10 @@ if(isset($_GET['counselOpt'])){
 
 		foreach($facultyId as $fid):
 			if($number <= 0){
-				header("location: ../" . $folder . "/index.php?counsel=true");
+				header("location: ../" . $folder . "/report_create.php?id=" . $id . "&type=" . $type . "&facultySubmit=true");
 			}
 			$counsel->addCounselDetails($database, $counselId, $fid, $folder);
-			echo $counselId . " " . $id . " " . $type . " " . $title . " " . $author . " " . $institute . " " . $fid . "<br>";
+			//echo $counselId . " " . $id . " " . $type . " " . $title . " " . $author . " " . $institute . " " . $fid . "<br>";
 		endforeach;
 	}
 

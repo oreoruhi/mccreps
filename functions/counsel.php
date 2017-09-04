@@ -52,16 +52,28 @@
 			if(!$query){
 			    header("location:../" . $folder . "/index.php?error=true");
 			} else {
-				$sql = "SELECT id FROM obtl_list WHERE id = LAST_INSERT_ID()";
+				$sql = "SELECT id FROM counsel_list WHERE id = LAST_INSERT_ID()";
 
 				$query = mysqli_query($datacon->con, $sql);
 				if(!$query){
 				    header("location:../" . $folder . "/index.php?error=true");
 				} else {
 					$row = mysqli_fetch_assoc($query);
+			
 					return $row['id'];
 				}
 			}
+		}
+
+		public function addCounselDetails($datacon, $counselId, $fid, $folder){
+			$sql = "INSERT INTO counsel_details
+					VALUES(null, '$counselId', '$fid', null, null)";
+
+			$query = mysqli_query($datacon->con, $sql);
+			if(!$query){
+			    //header("location:../" . $folder . "/index.php?error=true");
+			    echo("Error description: " . mysqli_error($datacon->con));
+			} 
 		}
 
 	}
