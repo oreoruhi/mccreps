@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2017 at 09:30 AM
+-- Generation Time: Sep 04, 2017 at 09:08 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -32,9 +32,16 @@ CREATE TABLE `counsel_details` (
   `id` int(10) NOT NULL,
   `counsel_id` int(10) NOT NULL,
   `faculty_id` int(10) NOT NULL,
-  `submission_date` date NOT NULL,
-  `report_file` text NOT NULL
+  `submission_date` date DEFAULT NULL,
+  `report_file` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `counsel_details`
+--
+
+INSERT INTO `counsel_details` (`id`, `counsel_id`, `faculty_id`, `submission_date`, `report_file`) VALUES
+(4, 18, 29, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -57,6 +64,13 @@ CREATE TABLE `counsel_list` (
   `vpaa_comments` text,
   `system_remarks` enum('OK','LATE') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `counsel_list`
+--
+
+INSERT INTO `counsel_list` (`id`, `sched_id`, `counsel_title`, `counsel_institute`, `counsel_author`, `counsel_approver`, `dean_fa_submitted`, `dean_remarks`, `dean_comments`, `vpaa_fa_submitted`, `vpaa_remarks`, `vpaa_comments`, `system_remarks`) VALUES
+(18, 5, 'test', 3, 16, NULL, '2017-09-04', 'Pending', NULL, NULL, 'Pending', NULL, 'LATE');
 
 -- --------------------------------------------------------
 
@@ -437,12 +451,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `counsel_details`
 --
 ALTER TABLE `counsel_details`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `counsel_list`
 --
 ALTER TABLE `counsel_list`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `faculty`
 --
@@ -467,7 +481,7 @@ ALTER TABLE `obtl_details`
 -- AUTO_INCREMENT for table `obtl_list`
 --
 ALTER TABLE `obtl_list`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `report_schedule`
 --
