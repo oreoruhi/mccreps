@@ -17,6 +17,7 @@
                 <div class="form">
                     <input type="text" class="form-control" id="demo-input-facebook-theme-faculty" name="facultyAssign" placeholder="Enter assigned faculty member">
                     <input type="text" value=""  name="facultyAssignId" hidden>
+                    <input type="text" value=""  name="facultyAssignReps" hidden>
                         <script type="text/javascript">
                             var members = new Array();
                            
@@ -32,6 +33,7 @@
                             };
                             
                             $(document).ready(function() {
+                                var reps=0;
                                 $("#demo-input-facebook-theme-faculty").tokenInput(<?php echo $faculty; ?>, {
                                         theme: "facebook",
                                         propertyToSearch: "firstname",
@@ -42,12 +44,18 @@
                                         preventDuplicates: true,
                                         onAdd: function(item){
                                             members.push(item.id);
+                                            reps++;
+
                                             console.log(members);
+                                            $('input[name="facultyAssigReps"]').val(reps);
                                             $('input[name="facultyAssignId"]').val(members);
                                         },
                                         onDelete: function(item){
                                             members.remove(item.id);
+                                            reps--;
+
                                             console.log(members);
+                                            $('input[name="facultyAssigReps"]').val(reps);
                                             $('input[name="facultyAssignId"]').val(members);
                                         }
                                     });

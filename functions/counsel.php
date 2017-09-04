@@ -21,25 +21,47 @@
 				}
 			}
 
-			// if(!empty($array)){
-
-			// 	return $array;
-
-			// } else {
-			// 	$sql = "SELECT * FROM institutes WHERE id = '$insid'";
-			// 	$query = mysqli_query($datacon->con, $sql);
-			// 	if (!$query) {
-			// 	    //header("location: ../index.php?invalid=true");
-			// 	    echo("Error description: " . mysqli_error($datacon->con));
-			// 	} else {
-			// 		$row = mysqli_fetch_assoc($query);
-			// 		$array = $row['ins_name'];
-			// 	}
-
-			// 	return $array;
-			// }
-
 			return $array;
+		}
+
+		public function addCounselList($datacon, $id, $title, $institute, $author, $folder){
+			$current_date = date('Y-m-d');
+			$sys_status;
+
+			$get_date = "SELECT deadline	
+						FROM report_schedule
+						WHERE id = '$id'";
+			$get_query = mysqli_query($datacon->con, $get_date);
+			if(!$get_query){
+				header("location:../" . $folder . "/index.php?error=true");
+			} else {
+				$row = mysqli_fetch_assoc($get_query);
+				$deadline = $row['deadline'];
+
+				if($current_date <= $deadline){
+					$sys_status = 'OK';
+				} else {
+					$sys_status = 'LATE';
+				}
+			}
+
+			$sql = "INSERT INTO counsel_list
+					VALUES(null, '$id', '$title', '$institute', '$author', null, NOW(), 'Pending', null, null, 'Pending', null, '$sys_status')";
+
+			$query = mysqli_query($datacon->con, $sql);
+			if(!$query){
+			    header("location:../" . $folder . "/index.php?error=true");
+			} else {
+				$sql = "SELECT id FROM obtl_list WHERE id = LAST_INSERT_ID()";
+
+				$query = mysqli_query($datacon->con, $sql);
+				if(!$query){
+				    header("location:../" . $folder . "/index.php?error=true");
+				} else {
+					$row = mysqli_fetch_assoc($query);
+					return $row['id'];
+				}
+			}
 		}
 
 	}

@@ -15,14 +15,19 @@ if(isset($_GET['counselOpt'])){
 		$author = $_SESSION['u_id'];
 		$institute = $_SESSION['ins_id'];
 
-		$counselId = $counsel->addCounselList($database, $id, $title, $institute, $author, $type);
+		$counselId = $counsel->addCounselList($database, $id, $title, $institute, $author, $type, $folder);
 
+		$number = mysqli_real_escape_string($database->con, $_POST['facultyAssignReps']);
 		$facultyId = mysqli_real_escape_string($database->con, $_POST['facultyAssignId']);
 
 		$facultyId = explode(",", $facultyId);
 
-		foreach($facultyId as $id):
-			$counsel->addCounselDetails($database, $counselId, $id, $folder);
+		foreach($facultyId as $fid):
+			if($number <= 0){
+				header("location: ../" . $folder . "/index.php?counsel=true");
+			}
+			$counsel->addCounselDetails($database, $counselId, $fid, $folder);
+			echo $counselId . " " . $id . " " . $type . " " . $title . " " . $author . " " . $institute . " " . $fid . "<br>";
 		endforeach;
 	}
 
