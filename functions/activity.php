@@ -474,6 +474,25 @@
 			}
 
 			return $array;				
+		}
+
+		public function reviewDetailsCounsel($datacon, $id){
+			$array = array();
+			$sql = "SELECT counsel_details.*, faculty.firstname, faculty.middlename, faculty.lastname, faculty.extension 
+					FROM counsel_details
+					LEFT JOIN faculty
+					ON (faculty.id = counsel_details.faculty_id) 
+					WHERE counsel_id = '$id'";
+			$query = mysqli_query($datacon->con, $sql);
+			if (!$query) {
+			    header("location: ../index.php?invalid=true");
+			} else {
+				while($row = mysqli_fetch_array($query)){
+					$array[] = $row;
+				}
+			}
+		
+			return $array;
 		}	
 
 	}

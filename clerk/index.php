@@ -143,8 +143,10 @@
                                                             $counselId = $schedule['id'];
                                                             $reviewCounsel = $activity->counselReportCount($database, $counselId);
                                                             if(count($reviewCounsel) > 0){
+                                                                $review_details_id_counsel = $reviewCounsel[0]['id'];
+                                                                $review_details_counsel = $activity->reviewDetailsCounsel($database, $review_details_id_counsel);
                                                         ?>
-                                                            <button type="button" class="btn bg-green waves-effect" data-type='counsel' data-toggle="modal" data-target="#review-modal">REVIEW SUBMITTED REPORT</button>
+                                                            <button type="button" class="btn bg-green waves-effect" data-chunk='<?php echo json_encode($reviewCounsel); ?>' data-type='counsel' data-details='<?php echo json_encode($review_details_counsel); ?>' data-toggle="modal" data-target="#review-modal">REVIEW SUBMITTED REPORT</button>
                                                         <?php } else { ?>
                                                             <a href="report_create.php?id=<?php echo $schedule['id']; ?>&type=<?php echo $schedule['report_type']; ?>"><button type="button" class="btn bg-cyan waves-effect">CREATE REPORT</button></a>
                                                         <?php } ?>
@@ -184,8 +186,6 @@
                 var data = datachunk[0];
                 var details = $(e.relatedTarget).data('details');
 
-                console.log(data);
-
                 $(e.currentTarget).find('.report-title').html(data['obtl_title']);
                 $(e.currentTarget).find('.report-author').html(data['firstname'] + " " + data['middlename'] + " " + data['lastname']);
                 $(e.currentTarget).find('.report-institute').html(data['ins_name']);
@@ -196,8 +196,6 @@
                 $(e.currentTarget).find('.report-vpaa-remarks').html(data['vpaa_comments']);
                 $(e.currentTarget).find('.report-dean-remarks').html(data['dean_comments']);
                 $(e.currentTarget).find('.input-contain').val(data['id']);
-
-                console.log(details);
 
                 for(i = 0; i < details.length; i++){
                     if(i %2 == 0){
@@ -216,8 +214,32 @@
                 }
 
                 if(data['dean_remarks'] == 'Approved'){
-                    $('.decision-buttons-clerk').empty();
+                    $('.decision-buttons-clerk').hide();
+                } else {
+                    $('.decision-buttons-clerk').show();
                 }
+
+            } else if(type === 'counsel'){
+                var datachunk = $(e.relatedTarget).data('chunk');
+                var data = datachunk[0];
+                var details = $(e.relatedTarget).data('details');
+
+                $(e.currentTarget).find('.report-title').html(data['counsel_title']);
+                $(e.currentTarget).find('.report-author').html(data['firstname'] + " " + data['middlename'] + " " + data['lastname']);
+                $(e.currentTarget).find('.report-institute').html(data['ins_name']);
+                $(e.currentTarget).find('.report-date').html(data['dean_fa_submitted']);
+                $(e.currentTarget).find('.report-vpaa-status').html(data['vpaa_remarks']);
+                $(e.currentTarget).find('.report-dean-status').html(data['dean_remarks']);
+                $(e.currentTarget).find('.report-system-status').html(data['system_remarks']);
+                $(e.currentTarget).find('.report-vpaa-remarks').html(data['vpaa_comments']);
+                $(e.currentTarget).find('.report-dean-remarks').html(data['dean_comments']);
+                $(e.currentTarget).find('.input-contain').val(data['id']);
+
+                if(data['dean_remarks'] == 'Approved'){
+                    $('.decision-buttons-clerk').hide();
+                } else {
+                    $('.decision-buttons-clerk').show();
+                }                
             }
 
         });

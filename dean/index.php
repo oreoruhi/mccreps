@@ -95,15 +95,11 @@
                                                                     $review_details = $activity->reviewDetails($database, $review_details_id);
                                                             ?>
                                   
-                                                            <button type="button" class="btn bg-green waves-effect" data-chunk='<?php echo json_encode($review); ?>' data-details='<?php echo json_encode($review_details); ?>' data-toggle="modal" data-target="#review-modal">REVIEW SUBMITTED REPORT</button>
+                                                            <button type="button" class="btn bg-green waves-effect" data-type='obtl' data-chunk='<?php echo json_encode($review); ?>' data-details='<?php echo json_encode($review_details); ?>' data-toggle="modal" data-target="#review-modal">REVIEW SUBMITTED REPORT</button>
                                                 
-                                                            <?php
-                                                                } else {
-                                                            ?>
-                                                            No report has been submitted
-                                                            <?php
-                                                                }
-                                                            ?>
+                                                            <?php } else { ?>
+                                                                No report has been submitted
+                                                            <?php } ?>
                                                         </center></td>
                                                 </tr>
                                             <?php } ?>
@@ -142,7 +138,17 @@
                                                     <td><center><?php echo date_format(date_create($schedule['deadline']), 'M d, Y - D'); ?></center></td>
                                                     <td><center><?php echo date_format(date_create($schedule['deadline_extension']), 'M d, Y - D'); ?></center></td>
                                                     <td><center><?php echo $schedule['status']; ?></center></td>
-                                                    <td><center>No report has been submitted</center></td>
+                                                    <td><center>
+                                                        <?php 
+                                                            $counselId = $schedule['id'];
+                                                            $reviewCounsel = $activity->counselReportCount($database, $counselId);
+                                                            if(count($reviewCounsel) > 0){
+                                                        ?>
+                                                            <button type="button" class="btn bg-green waves-effect" data-type='counsel' data-toggle="modal" data-target="#review-modal">REVIEW SUBMITTED REPORT</button>
+                                                        <?php } else { ?>
+                                                            No report has been submitted
+                                                        <?php } ?>
+                                                    </center></td>
                                                 </tr>
                                             <?php } ?>
                                         <?php endforeach; ?>
@@ -170,42 +176,47 @@
 
     <script>
         $('#review-modal').on('show.bs.modal', function(e) {
-            var datachunk = $(e.relatedTarget).data('chunk');
-            var data = datachunk[0];
-            var details = $(e.relatedTarget).data('details');
-            var separateArray = [];
+            var type = $(e.relatedTarget).data('type');
 
-            console.log(data);
+            if(type === 'obtl'){
+                var datachunk = $(e.relatedTarget).data('chunk');
+                var data = datachunk[0];
+                var details = $(e.relatedTarget).data('details');
 
-            $(e.currentTarget).find('.report-title').html(data['obtl_title']);
-            $(e.currentTarget).find('.report-author').html(data['firstname'] + " " + data['middlename'] + " " + data['lastname']);
-            $(e.currentTarget).find('.report-institute').html(data['ins_name']);
-            $(e.currentTarget).find('.report-date').html(data['dean_fa_submitted']);
-            $(e.currentTarget).find('.report-vpaa-status').html(data['vpaa_remarks']);
-            $(e.currentTarget).find('.report-dean-status').html(data['dean_remarks']);
-            $(e.currentTarget).find('.report-system-status').html(data['system_remarks']);
-            $(e.currentTarget).find('.report-vpaa-remarks').html(data['vpaa_comments']);
-            $(e.currentTarget).find('.report-dean-remarks').html(data['dean_comments']);
-            $(e.currentTarget).find('.input-contain').val(data['id']);
+                console.log(data);
 
-            for(i = 0; i < details.length; i++){
-                if(i %2 == 0){
-                    $('.list-data-even').append("<li><b><center>" + details[i]['course_desc'] + "</center></b></li>");
-                    for(x = 0; x < details[i]['assigned_faculty'].length; x++){
+                $(e.currentTarget).find('.report-title').html(data['obtl_title']);
+                $(e.currentTarget).find('.report-author').html(data['firstname'] + " " + data['middlename'] + " " + data['lastname']);
+                $(e.currentTarget).find('.report-institute').html(data['ins_name']);
+                $(e.currentTarget).find('.report-date').html(data['dean_fa_submitted']);
+                $(e.currentTarget).find('.report-vpaa-status').html(data['vpaa_remarks']);
+                $(e.currentTarget).find('.report-dean-status').html(data['dean_remarks']);
+                $(e.currentTarget).find('.report-system-status').html(data['system_remarks']);
+                $(e.currentTarget).find('.report-vpaa-remarks').html(data['vpaa_comments']);
+                $(e.currentTarget).find('.report-dean-remarks').html(data['dean_comments']);
+                $(e.currentTarget).find('.input-contain').val(data['id']);
 
-                        $('.list-data-even').append("<li><ul>" + details[i]['assigned_faculty'][x] + "</ul></li>");
+                console.log(details);
+
+                for(i = 0; i < details.length; i++){
+                    if(i %2 == 0){
+                        $('.list-data-even').append("<li><b><center>" + details[i]['course_desc'] + "</center></b></li>");
+                        for(x = 0; x < details[i]['assigned_faculty'].length; x++){
+
+                            $('.list-data-even').append("<li><ul>" + details[i]['assigned_faculty'][x] + "</ul></li>");
+                        }
+                    } else {
+                         $('.list-data-odd').append("<li><b><center>" + details[i]['course_desc'] + "</center></b></li>");
+                        for(x = 0; x < details[i]['assigned_faculty'].length; x++){
+
+                            $('.list-data-odd').append("<li><ul>" + details[i]['assigned_faculty'][x] + "</ul></li>");
+                        }                   
                     }
-                } else {
-                     $('.list-data-odd').append("<li><b><center>" + details[i]['course_desc'] + "</center></b></li>");
-                    for(x = 0; x < details[i]['assigned_faculty'].length; x++){
-
-                        $('.list-data-odd').append("<li><ul>" + details[i]['assigned_faculty'][x] + "</ul></li>");
-                    }                   
                 }
-            }
 
-            if(data['dean_remarks'] == 'Approved' || data['dean_remarks'] == 'For Revision'){
-                $('.decision-row').empty();
+                if(data['dean_remarks'] == 'Approved' || data['dean_remarks'] == 'For Revision'){
+                    $('.decision-buttons-clerk').empty();
+                }
             }
 
         });
@@ -213,6 +224,15 @@
         $('#review-modal').on('hide.bs.modal', function(e) {
             $('.list-data-even').empty();
             $('.list-data-odd').empty();
+            $('.report-title').empty();
+            $('.report-author').empty();
+            $('.report-institute').empty();
+            $('.report-date').empty();
+            $('.report-vpaa-status').empty();
+            $('.report-dean-status').empty();
+            $('.report-system-status').empty();
+            $('.report-dean-remarks').empty();
+            $('.report-vpaa-remarks').empty();
         });
 
     </script>
