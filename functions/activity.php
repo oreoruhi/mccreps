@@ -452,6 +452,28 @@
 			} else {
 				header("location:../" . $folder . "/index.php?deleted=true");
 			}		
+		}
+
+		public function counselReportCount($datacon, $counselId){
+			$array = array();
+			$ins_id = $_SESSION['ins_id'];
+			$sql = "SELECT counsel_list.*, users.firstname, users.middlename, users.lastname, institutes.ins_name 
+					FROM counsel_list
+					LEFT JOIN users
+					ON (counsel_list.counsel_author = users.id) 
+					LEFT JOIN institutes
+					ON (counsel_list.counsel_institute = institutes.id)
+					WHERE sched_id = '$counselId' AND counsel_institute = '$ins_id'";
+			$query = mysqli_query($datacon->con, $sql);
+			if (!$query) {
+			    header("location: ../index.php?error=true");
+			} else {
+				while($row = mysqli_fetch_array($query)){
+					$array[] = $row;
+				}
+			}
+
+			return $array;				
 		}	
 
 	}
