@@ -493,6 +493,17 @@
 			}
 		
 			return $array;
+		}
+
+		public function deleteReportCounsel($datacon, $id, $folder){			
+			$sql = "DELETE FROM counsel_list
+					WHERE id = '$id'";
+			$query = mysqli_query($datacon->con, $sql);
+			if(!$query){
+			    header("location:../" . $folder . "/index.php?error=true");
+			} else {
+				header("location:../" . $folder . "/index.php?deleted=true");
+			}		
 		}	
 
 	}

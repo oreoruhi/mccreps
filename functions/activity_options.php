@@ -233,8 +233,12 @@ if(isset($_GET['activityOpt'])){
 
 	if($_GET['deleteReport']){
 		$id = mysqli_real_escape_string($database->con, $_POST['idList']);
-
-		$activity->deleteReport($database, $id, $folder);
+		$type = mysqli_real_escape_string($database->con, $_POST['idType']);
+		if($type === 'obtl'){
+			$activity->deleteReport($database, $id, $folder);
+		} else if($type === 'counsel'){
+			$activity->deleteReportCounsel($database, $id, $folder);
+		}
 	}
 
 	if(isset($_GET['archiveSchedule'])){

@@ -196,6 +196,7 @@
                 $(e.currentTarget).find('.report-vpaa-remarks').html(data['vpaa_comments']);
                 $(e.currentTarget).find('.report-dean-remarks').html(data['dean_comments']);
                 $(e.currentTarget).find('.input-contain').val(data['id']);
+                $(e.currentTarget).find('.input-type').val(type);
 
                 for(i = 0; i < details.length; i++){
                     if(i %2 == 0){
@@ -234,6 +235,7 @@
                 $(e.currentTarget).find('.report-vpaa-remarks').html(data['vpaa_comments']);
                 $(e.currentTarget).find('.report-dean-remarks').html(data['dean_comments']);
                 $(e.currentTarget).find('.input-contain').val(data['id']);
+                $(e.currentTarget).find('.input-type').val(type);
 
                 if(data['dean_remarks'] == 'Approved'){
                     $('.decision-buttons-clerk').hide();

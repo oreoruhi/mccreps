@@ -97,6 +97,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <form action="../functions/activity.php?activityOpt=true&deleteReport=true&folder=<?php echo $_SESSION['folder']?>" method="POST">
+                                        <input type="text" class="input-type" value="" name="idType" hidden>
                                         <input type="text" class="input-contain" value="" name="idList" hidden>
                                         <button type="submit" class="btn bg-red btn-lg m-l-15 waves-effect">DELETE REPORT</button>
                                     </form>
