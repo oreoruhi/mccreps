@@ -111,7 +111,7 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($schedules as $schedule): ?>
-                                            <?php if($schedule['report_type']  == 'OBTL'&& $schedule['status'] != 'Archived'){ ?>
+                                            <?php if($schedule['report_type']  == 'OBTL' && $schedule['status'] != 'Archived'){ ?>
                                                 <tr>
                                                     <td><center><?php echo $schedule['academic_year']; ?></center></td>
                                                     <td><center><?php echo date_format(date_create($schedule['deadline']), 'M d, Y - D'); ?></center></td>
@@ -159,14 +159,22 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($schedules as $schedule): ?>
-                                            <?php if($schedule['report_type']  == 'Counseling Report' && $schedule['status'] != 'Closed'){ ?>
+                                            <?php if($schedule['report_type']  == 'Counseling Report' && $schedule['status'] != 'Archived'){ ?>
                                                 <tr>
                                                     <td><center><?php echo $schedule['academic_year']; ?></center></td>
                                                     <td><center><?php echo date_format(date_create($schedule['deadline']), 'M d, Y - D'); ?></center></td>
                                                     <td><center><?php echo date_format(date_create($schedule['deadline_extension']), 'M d, Y - D'); ?></center></td>
                                                     <td><center><?php echo $schedule['status']; ?></center></td>
-                                                    <td><center><button type="button" class="btn bg-cyan waves-effect" data-toggle="modal" data-target="#edit-schedule-modal" data-reporttype="OBTL" data-id="<?php echo $schedule['id']; ?>">MODIFY DEADLINE</button>&nbsp;<a href="../functions/activity.php?activityOpt=true&deleteSchedule=true&id=<?php echo $schedule['id']; ?>&folder=<?php echo $_SESSION['folder']; ?>"><button type="button" class="btn bg-red waves-effect">CANCEL</button></a></center><br>
-                                                    <center><a href="counsel_submissions.php?id=<?php echo $schedule['id']; ?>"><button class="btn bg-green waves-effect">SUBMITTED REPORTS</button></a></center></td>
+                                                    <td><center>
+                                                    <?php if($schedule['status'] != 'Closed'){ ?>
+                                                    <button type="button" class="btn bg-cyan waves-effect" data-toggle="modal" data-target="#edit-schedule-modal" data-reporttype="Counseling Report" data-id="<?php echo $schedule['id']; ?>">MODIFY DEADLINE</button>&nbsp;<a href="../functions/activity.php?activityOpt=true&deleteSchedule=true&id=<?php echo $schedule['id']; ?>&folder=<?php echo $_SESSION['folder']; ?>"><button type="button" class="btn bg-red waves-effect">CANCEL</button></a></center>
+                                                    <br>
+                                                    <?php } ?>
+                                                    <center><a href="counsel_submissions.php?id=<?php echo $schedule['id']; ?>"><button type="button" class="btn bg-green waves-effect">SUBMITTED REPORTS</button></a>
+                                                    <?php if($schedule['status'] == 'Closed'){?>
+                                                    &nbsp;<a href="../functions/activity.php?activityOpt=true&archiveSchedule=true&id=<?php echo $schedule['id']; ?>&folder=<?php echo $_SESSION['folder']; ?>"><button type="button" class="btn bg-red waves-effect">ARCHIVE</button></a>
+                                                    <?php } ?>
+                                                    </center></td>
                                                 </tr>
                                             <?php } ?>
                                         <?php endforeach; ?>

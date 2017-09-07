@@ -80,7 +80,7 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($schedules as $schedule): ?>
-                                            <?php if($schedule['report_type']  == 'OBTL'){ ?>
+                                            <?php if($schedule['report_type']  == 'OBTL' && $schedule['status'] != 'Closed'){ ?>
                                                 <tr>
                                                     <td><center><?php echo $schedule['academic_year']; ?></center></td>
                                                     <td><center><?php echo date_format(date_create($schedule['deadline']), 'M d, Y - D'); ?></center></td>
@@ -132,7 +132,7 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($schedules as $schedule): ?>
-                                            <?php if($schedule['report_type']  == 'Counseling Report'){ ?>
+                                            <?php if($schedule['report_type']  == 'Counseling Report' && $schedule['status'] != 'Closed'){ ?>
                                                 <tr>
                                                     <td><center><?php echo $schedule['academic_year']; ?></center></td>
                                                     <td><center><?php echo date_format(date_create($schedule['deadline']), 'M d, Y - D'); ?></center></td>
