@@ -38,8 +38,8 @@
 					<?php
 						$rowspan = count($rep['assigned_faculty']);
 					?>
-					<td rowspan="3" class="report_table_td"><?php echo $rep['course_code']; ?></td>
-					<td rowspan="3" class="report_table_td"><?php echo $rep['course_desc']; ?></td>
+					<td rowspan="<?php echo $rowspan+1; ?>" class="report_table_td"><?php echo $rep['course_code']; ?></td>
+					<td rowspan="<?php echo $rowspan+1; ?>" class="report_table_td"><?php echo $rep['course_desc']; ?></td>
 					<?php for($i = 0; $i < $rowspan; $i++){ ?>
 						<tr class="report_table_tr">
 							<td class="report_table_td"><?php echo $rep['assigned_faculty'][$i]; ?></td>

@@ -425,6 +425,7 @@
 						SET dean_comments = '$comment',
 							dean_remarks = 'Approved',
 							obtl_approver = '$dean_id',
+							vpaa_remarks = 'Pending',
 							vpaa_fa_submitted = NOW()
 						WHERE id = '$id'";
 

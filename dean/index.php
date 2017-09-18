@@ -215,7 +215,9 @@
                 }
 
                 if(data['dean_remarks'] == 'Approved' || data['dean_remarks'] == 'For Revision'){
-                    $('.decision-buttons-clerk').empty();
+                    $('.decision-row').attr('hidden', true);
+                } else {
+                    $('.comments').attr('hidden', true);
                 }
             }
 
